@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_kyc_screen"
+    android:orientation="vertical">
+
+    <!-- TOP TITLE BAR -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_pill"
+            android:contentDescription="@string/security"
+            android:padding="9dp"
+            android:src="@drawable/ic_shield" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/video_kyc"
+                android:textColor="#111827"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/secure_identity_verification"
+                android:textColor="#667085"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/sessionCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:background="@drawable/bg_pill"
+                android:paddingStart="10dp"
+                android:paddingTop="6dp"
+                android:textColor="#1D4ED8"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <!-- MAIN CONTENT -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="5sp">
+
+            <!-- STATUS CARD -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/identity_verification"
+                    android:textColor="#111827"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/starting_secure_verification"
+                    android:textColor="#667085"
+                    android:textSize="12sp" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="15dp"
+                    android:indeterminate="true" />
+
+            </LinearLayout>
+
+
+            <!-- ERROR -->
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_error"
+                android:padding="14dp"
+                android:textColor="#B42318"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <!-- VIDEO -->
+                <FrameLayout
+                    android:id="@+id/videoContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/callActions"
+                    android:layout_marginTop="14dp"
+                    android:background="@drawable/bg_video"
+                    android:clipToOutline="true"
+                    android:visibility="visible">
+
+                    <org.webrtc.SurfaceViewRenderer
+                        android:id="@+id/localView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <org.webrtc.SurfaceViewRenderer
+                        android:id="@+id/remoteView"
+                        android:layout_width="116dp"
+                        android:layout_height="156dp"
+                        android:layout_gravity="top|end"
+                        android:layout_margin="14dp" />
+
+                    <!-- LIVE STATUS -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|start"
+                        android:layout_margin="14dp"
+                        android:background="@drawable/bg_live_pill"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:id="@+id/liveBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/connecting"
+                            android:textColor="#087443"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+
+                    <!-- MEDIA CONTROLS -->
+                    <LinearLayout
+                        android:id="@+id/mediaControls"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/bg_video"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="7dp"
+                        android:visibility="gone">
+                        <!--android:background="#CC111827"-->
+                        <ImageButton
+                            android:id="@+id/mic"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:background="@drawable/bg_control"
+                            android:contentDescription="@string/mute_microphone"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_mic" />
+
+                        <ImageButton
+                            android:id="@+id/camera"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_control"
+                            android:contentDescription="@string/turn_camera_off"
+                            android:padding="12dp"
+                            android:src="@drawable/ic_video" />
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <!-- =================================================
+                BUTTONS
+                ONLY CHANGE: HORIZONTAL
+                ================================================= -->
+
+
+                <LinearLayout
+                    android:id="@+id/callActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="2dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="2">
+
+                    <!-- END VERIFICATION -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/end"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_end"
+                        android:drawableStart="@drawable/ic_phone_end"
+                        android:drawablePadding="7dp"
+                        android:gravity="center"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/end_verification"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <!-- CANCEL VERIFICATION -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/cancel"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_cancel_button"
+                        android:drawableStart="@drawable/close"
+                        android:gravity="center"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:stateListAnimator="@null"
+                        android:text="@string/cancel_verification"
+                        android:textAllCaps="false"
+                        android:textColor="#344054"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- BOTTOM DEVELOPED BY -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_video_call_is_encrypted_and_handled_securely"
+            android:textColor="#98A2B3"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/brandName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/developed_by"
+            android:textColor="#98A2B3"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+    <!--<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_kyc_screen"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="14dp">
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:background="@drawable/bg_pill"
+            android:contentDescription="@string/security"
+            android:padding="9dp"
+            android:src="@drawable/ic_shield" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/video_kyc"
+                android:textColor="#111827"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/secure_identity_verification"
+                android:textColor="#667085"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/sessionCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pill"
+            android:paddingStart="10dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="6dp"
+            android:textColor="#1D4ED8"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/identity_verification"
+                    android:textColor="#111827"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/starting_secure_verification"
+                    android:textColor="#667085"
+                    android:textSize="14sp" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="15dp"
+                    android:indeterminate="true" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_error"
+                android:padding="14dp"
+                android:textColor="#B42318"
+                android:textSize="13sp"
+                android:visibility="gone" />
+
+            <FrameLayout
+                android:id="@+id/videoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/bg_video"
+                android:clipToOutline="true"
+                android:visibility="gone">
+
+                <org.webrtc.SurfaceViewRenderer
+                    android:id="@+id/localView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <org.webrtc.SurfaceViewRenderer
+                    android:id="@+id/remoteView"
+                    android:layout_width="116dp"
+                    android:layout_height="156dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="14dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:layout_margin="14dp"
+                    android:background="@drawable/bg_live_pill"
+                    android:gravity="center_vertical"
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp">
+
+                    <TextView
+                        android:id="@+id/liveBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/connecting"
+                        android:textColor="#087443"
+                        android:textSize="11sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/mediaControls"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="18dp"
+                    android:background="#CC111827"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="7dp"
+                    android:visibility="gone">
+
+                    <ImageButton
+                        android:id="@+id/mic"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/mute_microphone"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_mic" />
+
+                    <ImageButton
+                        android:id="@+id/camera"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_control"
+                        android:contentDescription="@string/turn_camera_off"
+                        android:padding="12dp"
+                        android:src="@drawable/ic_video" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/callActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_end"
+                    android:drawableStart="@drawable/ic_phone_end"
+                    android:drawablePadding="8dp"
+                    android:minWidth="160dp"
+                    android:text="@string/end_verification"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/cancel"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_card"
+                android:text="@string/cancel_verification"
+                android:textAllCaps="false"
+                android:textColor="#344054" />
+
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_video_call_is_encrypted_and_handled_securely"
+            android:textColor="#98A2B3"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/brandName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/developed_by"
+            android:textColor="#98A2B3"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
+    </LinearLayout>
+</LinearLayout>-->

@@ -1,0 +1,15 @@
+<resources>
+    <string name="kyc_app_name">Video KYC</string>
+    <string name="security">Security</string>
+    <string name="secure_identity_verification">Secure identity verification</string>
+    <string name="identity_verification">IDENTITY VERIFICATION</string>
+    <string name="starting_secure_verification">Starting secure verification…</string>
+    <string name="mute_microphone">Mute microphone</string>
+    <string name="turn_camera_off">Turn camera off</string>
+    <string name="end_verification">End verification</string>
+    <string name="cancel_verification">Cancel verification</string>
+    <string name="your_video_call_is_encrypted_and_handled_securely">Your video call is encrypted and handled securely.</string>
+    <string name="developed_by">Developed by misba</string>
+    <string name="video_kyc">Video KYC</string>
+    <string name="connecting">CONNECTING</string>
+</resources>
