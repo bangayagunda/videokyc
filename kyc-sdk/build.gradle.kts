@@ -24,11 +24,11 @@ android {
         viewBinding = true
     }
 
-    /*publishing {
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
-    }*/
+    }
 }
 kotlin {
     jvmToolchain(17)
@@ -55,7 +55,7 @@ afterEvaluate {
                 groupId = "com.videokyc"
                 artifactId = "kyc-sdk"
                 version = project.version.toString()
-                artifact("$buildDir/outputs/aar/kyc-sdk-release.aar")
+               // artifact("$buildDir/outputs/aar/kyc-sdk-release.aar")
             }
         }
         /*repositories {
